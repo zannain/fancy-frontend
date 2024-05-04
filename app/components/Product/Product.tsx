@@ -8,7 +8,7 @@ export default function Product({product, image}: ProductProps) {
     return (
         <>
             <div>
-                <img src={image?.image_url} />
+                <img className="object-cover" src={image?.image_url} />
             </div>
             <div>
                 {product.description}
