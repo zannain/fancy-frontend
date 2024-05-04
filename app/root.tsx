@@ -5,9 +5,11 @@ import {
     Scripts,
   } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
-import stylesheet from "./tailwind.css?url";
+import tailWindstyles from "./tailwind.css?url";
+import mainStyles from "./main.css?url";
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: stylesheet },
+  { rel: "stylesheet", href: tailWindstyles },
+  { rel: "stylesheet", href: mainStyles },
   { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wdth,wght@0,87.5,100..900;1,87.5,100..900&display=swap"}
 ];
 export default function App() {
@@ -22,7 +24,7 @@ export default function App() {
           <Links />
         </head>
         <body>
-          <div className="container mx-auto">
+          <div>
             <Outlet />
           </div>
 

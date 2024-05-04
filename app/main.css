@@ -1,0 +1,30 @@
+.container {
+    box-sizing: border-box;
+    padding: 0 16px;
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: 16px;
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      padding: 0 32px;
+      width: 100%;
+
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      column-gap: 32px;
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .container {
+      margin: 0 auto;
+      max-width: 1280px;
+      padding: 0 32px;
+
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: 32px;
+    }
+  }

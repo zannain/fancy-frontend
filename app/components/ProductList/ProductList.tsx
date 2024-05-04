@@ -1,8 +1,27 @@
 import Product from "../Product/Product";
+import {
+  productImageAPI,
+  Product as ProductModel,
+  ProductImageRecords,
+} from "../../data";
 
-export default function ProductList({products}) {
-  return (<div>
-    <h1 className="text-3xl font-bold">Latest Arrivals</h1>
-    {products.map(product => <Product key={product.product_id} product={product} />)}
-  </div>);
+type ProductListProps = {
+  products: ProductModel[];
+  images: ProductImageRecords;
+};
+export default function ProductList({ products, images }: ProductListProps) {
+  return (
+    <>
+    <h1>Latest Arrivals</h1>
+      <div className="container">
+        {products.map((product) => (
+          <Product
+            key={product.product_id}
+            product={product}
+            image={images[product.product_id]}
+          />
+        ))}
+      </div>
+    </>
+  );
 }

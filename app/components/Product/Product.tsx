@@ -1,13 +1,21 @@
-export default function Product({product}) {
-    console.log(product)
+import { ProductImage, Product as ProductModel } from "../../data"
+
+type ProductProps = {
+    product: ProductModel,
+    image: ProductImage
+}
+export default function Product({product, image}: ProductProps) {
     return (
-        <div>
-            {product.product_id}
-            {product.category}
-            {product.collection}
-            {product.created_at}
-            {product.description}
-            {product.name}
-        </div>
+        <>
+            <div>
+                <img src={image?.image_url} />
+            </div>
+            <div>
+                {product.description}
+            </div>
+            <div>
+                {product.category}
+            </div>
+        </>
     )
 }
