@@ -11,9 +11,8 @@ type ProductListProps = {
 };
 export default function ProductList({ products, images }: ProductListProps) {
   return (
-    <>
-    <h1>Latest Arrivals</h1>
-      <div className="container">
+    <div className="m-4">
+    <h1 className="text-lg font-bold">Latest Arrivals</h1>
         {products.map((product) => (
           <Product
             key={product.product_id}
@@ -21,7 +20,6 @@ export default function ProductList({ products, images }: ProductListProps) {
             image={images[product.product_id]}
           />
         ))}
-      </div>
-    </>
+    </div>
   );
 }
