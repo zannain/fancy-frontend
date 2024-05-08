@@ -1,7 +1,7 @@
 
 export type ProductRecords = Record<string, Product>
-export type ProductImageRecords = Record<string, ProductImage>
-export type InventoryRecords = Record<string, Inventory>
+export type ProductImageRecords = Record<string, ProductImage[]>
+export type InventoryRecords = Record<string, Inventory[]>
 
 
 export type Inventory = {
@@ -40,6 +40,9 @@ const productAPI = {
     async addProduct(product: Product): Promise<void> {
         productRecords[product.product_id] = product
     },
+    async getProduct(productId: string): Promise<Product | undefined> {
+        return productRecords[productId]
+    },
     async getProducts(): Promise<Product[]> {
         return Object.values(productRecords);
     }
@@ -48,12 +51,15 @@ const productAPI = {
 
 const productImageAPI = {
     async addProductImage(image: ProductImage): Promise<void> {
-        productImageRecords[image.product_id] = image
+        if (!productImageRecords[image.product_id]) {
+            productImageRecords[image.product_id] = []
+        }
+        productImageRecords[image.product_id].push(image)
     },
-    async get(id: string): Promise<ProductImage> {
+    async getProductImage(id: string): Promise<ProductImage[] | undefined> {
         return productImageRecords[id]
     },
-    async getAll(): Promise<ProductImageRecords> {
+    async getProductImages(): Promise<ProductImageRecords> {
         return productImageRecords
     }
 
@@ -61,8 +67,14 @@ const productImageAPI = {
 }
 
 const inventoryAPI = {
-    addToInventory(item: Inventory): void {
-        inventoryRecords[item.product_id] = item
+    addInventory(item: Inventory): void {
+        if (!inventoryRecords[item.product_id]) {
+            inventoryRecords[item.product_id] = []
+        }
+        inventoryRecords[item.product_id].push(item)
+    },
+    async getInventory(): Promise<InventoryRecords> {
+        return inventoryRecords;
     }
 }
 

@@ -6,16 +6,17 @@ import productImages from "../data/product-images.json";
 import inventory from "../data/inventory.json";
 import { productAPI, productImageAPI, inventoryAPI } from "../data";
 export const loader = async () => {
-  await inventory.forEach((item) => inventoryAPI.addToInventory(item));
+  await inventory.forEach((item) => inventoryAPI.addInventory(item));
   await productImages.forEach((image) =>
     productImageAPI.addProductImage(image)
   );
   await products.forEach((product) => productAPI.addProduct(product));
   const allProducts = await productAPI.getProducts();
-  const allImages = await productImageAPI.getAll();
-  return json({ allProducts, allImages });
+  const allImages = await productImageAPI.getProductImages();
+  const allInventory = await inventoryAPI.getInventory();
+  return json({ allProducts, allImages, allInventory });
 };
 export default function ProductsIndex() {
-  const { allProducts, allImages } = useLoaderData<typeof loader>();
-  return <ProductList products={allProducts} images={allImages} />;
+  const { allProducts, allImages, allInventory } = useLoaderData<typeof loader>();
+  return <ProductList products={allProducts} images={allImages} inventory={allInventory} />;
 }
