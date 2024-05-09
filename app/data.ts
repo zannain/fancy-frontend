@@ -1,9 +1,3 @@
-
-export type ProductRecords = Record<string, Product>
-export type ProductImageRecords = Record<string, ProductImage[]>
-export type InventoryRecords = Record<string, Inventory[]>
-
-
 export type Inventory = {
     product_id: string
     sku: string
@@ -16,67 +10,38 @@ export type Inventory = {
     sold: number
     stock: number
 }
-
+export type Collection = {
+    collection_id: string,
+    name: string,
+    description: string
+    image_url: string
+    created_at: string
+}
 export type Product = {
     product_id: string
     name: string
     description: string
-    category: string
+    category: ProductCategory
     collection: string
-    created_at: string
-}
+    created_at: string,
+    images: ProductImage[],
+    inventory: Inventory[],
 
+}
 export type ProductImage = {
     product_id: string
     color: string,
     image_url: string
 }
-let productRecords: ProductRecords = {}
-let inventoryRecords: InventoryRecords = {}
-let productImageRecords: ProductImageRecords = {}
 
-const productAPI = {
-
-    async addProduct(product: Product): Promise<void> {
-        productRecords[product.product_id] = product
-    },
-    async getProduct(productId: string): Promise<Product | undefined> {
-        return productRecords[productId]
-    },
-    async getProducts(): Promise<Product[]> {
-        return Object.values(productRecords);
-    }
-
+export type ProductCategory = {
+    category_id: string
+    name: ProductCategoryEnum
+    created_at: string
+}
+enum ProductCategoryEnum {
+    MEN = "Men",
+    WOMEN = "Women",
+    UNISEX= "Unisex"
 }
 
-const productImageAPI = {
-    async addProductImage(image: ProductImage): Promise<void> {
-        if (!productImageRecords[image.product_id]) {
-            productImageRecords[image.product_id] = []
-        }
-        productImageRecords[image.product_id].push(image)
-    },
-    async getProductImage(id: string): Promise<ProductImage[] | undefined> {
-        return productImageRecords[id]
-    },
-    async getProductImages(): Promise<ProductImageRecords> {
-        return productImageRecords
-    }
-
-
-}
-
-const inventoryAPI = {
-    addInventory(item: Inventory): void {
-        if (!inventoryRecords[item.product_id]) {
-            inventoryRecords[item.product_id] = []
-        }
-        inventoryRecords[item.product_id].push(item)
-    },
-    async getInventory(): Promise<InventoryRecords> {
-        return inventoryRecords;
-    }
-}
-
-
-export { productAPI, productImageAPI, inventoryAPI}
