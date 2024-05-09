@@ -10,7 +10,7 @@ export default function ProductList({ products }: ProductListProps) {
   return (
     <div>
       <h1 className="text-lg font-bold mb-10">Latest Arrivals</h1>
-      <div className="container">
+      <div className="container gap-y-8">
         {products.map((product) => (
           <Product
             key={product.product_id}

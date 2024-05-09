@@ -1,19 +1,19 @@
 import { useState } from "react";
 import ColorBubble from "../ColorBubble/ColorBubble";
+import { Product as ProductModel } from "~/data";
 
 type ProductProps = {
-  product: any;
+  product: ProductModel;
 };
 export default function Product({ product}: ProductProps) {
   const uniqueColors = Array.from(new Set(product.inventory.map(item => item.color)));
   const [productImage, setProductImage] = useState(product.images[0].image_url)
   const handleProductImage = (color: string) => {
-    const newImage = product.images.filter(i => i.product_id == product.product_id && i.color == color)
+    const newImage = product.images.filter(i => i.color == color)
     if (newImage.length > 0) {
       setProductImage(newImage[0].image_url)
     }
   }
-  console.log(product)
   return (
       <div className="flex flex-col gap-1">
           <div>
