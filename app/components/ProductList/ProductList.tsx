@@ -1,7 +1,6 @@
 import Product from "../Product/Product";
-import {
-  Product as ProductModel,
-} from "../../data";
+import { Product as ProductModel } from "../../data";
+import Button from "../Button/Button";
 
 type ProductListProps = {
   products: ProductModel[];
@@ -9,15 +8,16 @@ type ProductListProps = {
 export default function ProductList({ products }: ProductListProps) {
   return (
     <div>
-      <h1 className="text-lg font-bold mb-10">Latest Arrivals</h1>
-      <div className="container gap-y-8">
-        {products.map((product) => (
-          <Product
-            key={product.product_id}
-            product={product}
-          />
-        ))}
+      <div className="flex justify-between">
+        <h1 className="text-lg font-bold mb-10 ml-4">Latest Arrivals</h1>
+        <Button text="View All"></Button>
       </div>
-    </div>
+
+        <div className="container gap-y-8">
+          {products.map((product) => (
+            <Product key={product.product_id} product={product} />
+          ))}
+        </div>
+      </div>
   );
 }

@@ -1,0 +1,28 @@
+:root {
+    --sm-padding: 8px 12px;
+    --md-paddding: 10px 14px;
+    --lg-padding: 10px 16px;
+    --xl-padding: 12px 20px;
+    --xxl-padding: 16px 24px;
+
+}
+.btn-sm {
+    padding: var(--sm-padding);
+}
+.btn-md {
+    padding: var(--md-paddding);
+}
+
+.btn-lg {
+    padding: var(--lg-padding);
+}
+
+.btn-xl {
+    padding: var(--xl-padding);
+}
+
+.btn-xxl {
+    padding: var(--xxl-padding);
+}
+
+

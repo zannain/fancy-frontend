@@ -8,12 +8,14 @@ type ProductProps = {
 export default function Product({ product}: ProductProps) {
   const uniqueColors = Array.from(new Set(product.inventory.map(item => item.color)));
   const [productImage, setProductImage] = useState(product.images[0].image_url)
+
   const handleProductImage = (color: string) => {
     const newImage = product.images.filter(i => i.color == color)
     if (newImage.length > 0) {
       setProductImage(newImage[0].image_url)
     }
   }
+
   return (
       <div className="flex flex-col gap-1">
           <div>
