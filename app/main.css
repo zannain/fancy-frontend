@@ -52,6 +52,9 @@ body {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     column-gap: 32px;
   }
+  .product-wrapper {
+    max-width: 1280px;
+  }
 }
 
 .circle {
@@ -66,7 +69,6 @@ body {
   width: 100%;
   margin: 0 auto;
   align-items: center;
-  max-width: 1280px;
 }
 
 .product:hover .product-name {
