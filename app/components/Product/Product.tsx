@@ -7,18 +7,17 @@ type ProductProps = {
 };
 export default function Product({ product }: ProductProps) {
   const uniqueColors = Array.from(
-    new Set(product.inventory.map((item) => item.color))
+    new Set(product.images.map((item) => item.color))
   );
   const [productImage, setProductImage] = useState(product.images[0].image_url);
-  const [currentProduct, setCurrentProduct] = useState(product);
   const [selectedInventory, setSelectedInventory] = useState(
     product.inventory[0]
   );
   const updateInventory = (color: string) => {
-    // const newImage = product.images.filter(i => i.color == color)
-    // if (newImage?.length > 0) {
-    //   setProductImage(newImage[0].image_url)
-    // }
+    const newImage = product.images.filter(i => i.color == color)
+    if (newImage?.length > 0) {
+      setProductImage(newImage[0].image_url)
+    }
   };
   const displayPrice = () => {
     if (selectedInventory.list_price == selectedInventory.sale_price) {
@@ -43,7 +42,7 @@ export default function Product({ product }: ProductProps) {
 
   return (
     <li className="product">
-      <figure tabIndex={0} className="focus:ring-2 focus:ring-offset-3 pb-2">
+      <figure tabIndex={0} className="focus:ring-indigo-200 focus:ring-offset-indigo-200 pb-2">
         <img
           className="product-img block h-auto w-full rounded-md object-cover aspect-square"
           src={productImage}
@@ -56,7 +55,7 @@ export default function Product({ product }: ProductProps) {
           <div className="product-price text-neutral-500 text-lg mt-2 ml-1">
             {displayPrice()}
           </div>
-          <div className="flex gap-1 ml-1">
+          <div className="flex gap-1 ml-1 mt-2">
             {uniqueColors.map((item) => (
               <ColorBubble
                 key={item}
