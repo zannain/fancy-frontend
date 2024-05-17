@@ -7,7 +7,7 @@ type ProductListProps = {
 };
 export default function ProductList({ products }: ProductListProps) {
   return (
-    <div className="max-w-full mx-auto grid grid-cols-1 px-4">
+    <div className="flex flex-col mx-auto lg:max-w-[1280px] grid-cols-1 px-4">
         <div className="flex gap-2 m-2 justify-between self-stretch">
           <h1 className="text-2xl font-bold mb-10 ml-4">Latest Arrivals</h1>
           <Button size="lg" variant="secondary">

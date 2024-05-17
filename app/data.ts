@@ -21,6 +21,7 @@ export type Product = {
     product_id: string
     name: string
     description: string
+    colors: string[],
     category: ProductCategory
     collection: string
     created_at: string,

@@ -1,39 +1,44 @@
 import { useState } from "react";
 import ColorBubble from "../ColorBubble/ColorBubble";
-import { Product as ProductModel } from "~/data";
+import { ProductImage, Product as ProductModel } from "~/data";
 
 type ProductProps = {
   product: ProductModel;
 };
 export default function Product({ product }: ProductProps) {
-  const uniqueColors = Array.from(
-    new Set(product.images.map((item) => item.color))
+  const colors = product.colors;
+  const images = colors.reduce((acc: ProductImage[], item) => {
+    let img = product.images.find((img) => img.color === item);
+    acc.push(img!);
+    return acc;
+  }, []);
+  const [currentColor, setCurrentColor] = useState(colors[0]);
+  const image = images.find((item) => item.color === currentColor)?.image_url;
+
+  const inventory = product.inventory.find(
+    (item) => item.color === currentColor
   );
-  const [productImage, setProductImage] = useState(product.images[0].image_url);
-  const [selectedInventory, setSelectedInventory] = useState(
-    product.inventory[0]
-  );
-  const updateInventory = (color: string) => {
-    const newImage = product.images.filter(i => i.color == color)
-    if (newImage?.length > 0) {
-      setProductImage(newImage[0].image_url)
-    }
+  const hasDiscount =
+    inventory?.discount_percentage || inventory?.discount ? true : false;
+
+  const handleColorChange = (clr: string) => {
+    setCurrentColor(clr);
   };
   const displayPrice = () => {
-    if (selectedInventory.list_price == selectedInventory.sale_price) {
+    if (!hasDiscount) {
       return (
         <div className="product-price text-neutral-500 text-lg">
-          ${selectedInventory.list_price}
+          ${inventory?.list_price}
         </div>
       );
     } else {
       return (
         <div className="flex gap-3">
           <div className="product-price text-neutral-500 text-lg">
-            ${selectedInventory.sale_price}
+            ${inventory?.sale_price}
           </div>
           <div className="product-price text-neutral-500 text-lg">
-            <s>${selectedInventory.list_price}</s>
+            <s>${inventory?.list_price}</s>
           </div>
         </div>
       );
@@ -42,27 +47,31 @@ export default function Product({ product }: ProductProps) {
 
   return (
     <li className="product">
-      <figure tabIndex={0} className="focus:ring-indigo-200 focus:ring-offset-indigo-200 pb-2">
+      <figure
+        tabIndex={0}
+        className="focus:ring-indigo-200 focus:ring-offset-indigo-200 pb-2"
+      >
         <img
           className="product-img block h-auto w-full rounded-md object-cover aspect-square"
-          src={productImage}
+          src={image}
         />
         <figcaption>
           <div className="product-color text-neutral-600 mt-4 ml-1 capitalize">
-            {product.inventory[0].color}
+            {currentColor}
           </div>
           <div className="product-name text-lg mt-1 ml-1">{product.name}</div>
           <div className="product-price text-neutral-500 text-lg mt-2 ml-1">
             {displayPrice()}
           </div>
           <div className="flex gap-1 ml-1 mt-2">
-            {uniqueColors.map((item) => (
-              <ColorBubble
-                key={item}
-                color={item}
-                inventory={selectedInventory}
-                handleInventoryUpdate={updateInventory}
-              />
+            {colors.map((item) => (
+              <button
+                onClick={() => handleColorChange(item)}
+                onMouseEnter={() => handleColorChange(item)}
+                onFocus={() => handleColorChange(item)}
+                className="circle focus:ring-indigo-200 focus:ring-offset-indigo-200"
+                style={{ backgroundColor: item }}
+              ></button>
             ))}
           </div>
         </figcaption>
