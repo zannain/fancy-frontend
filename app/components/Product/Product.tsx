@@ -5,6 +5,7 @@ import { ProductImage, Product as ProductModel } from "~/data";
 type ProductProps = {
   product: ProductModel;
 };
+
 export default function Product({ product }: ProductProps) {
   const colors = product.colors;
   const images = colors.reduce((acc: ProductImage[], item) => {
@@ -49,7 +50,7 @@ export default function Product({ product }: ProductProps) {
     <li className="product">
       <figure
         tabIndex={0}
-        className="focus:ring-indigo-200 focus:ring-offset-indigo-200 pb-2"
+        className="focus:ring-indigo-200 focus:ring-offset-indigo-200 hover:ring-indigo-200 hover:ring pb-2"
       >
         <img
           className="product-img block h-auto w-full rounded-md object-cover aspect-square"
@@ -64,8 +65,9 @@ export default function Product({ product }: ProductProps) {
             {displayPrice()}
           </div>
           <div className="flex gap-1 ml-1 mt-2">
-            {colors.map((item) => (
+            {colors.map((item, i) => (
               <button
+                key={i}
                 onClick={() => handleColorChange(item)}
                 onMouseEnter={() => handleColorChange(item)}
                 onFocus={() => handleColorChange(item)}
