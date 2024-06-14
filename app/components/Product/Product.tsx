@@ -67,6 +67,7 @@ export default function Product({ product }: ProductProps) {
           <div className="flex gap-1 ml-1 mt-2">
             {colors.map((item, i) => (
               <button
+
                 key={i}
                 onClick={() => handleColorChange(item)}
                 onMouseEnter={() => handleColorChange(item)}

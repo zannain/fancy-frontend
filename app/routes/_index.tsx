@@ -10,7 +10,7 @@ export default function RootRoute() {
       </Button>
 
       <Button size="md" variant="primary">
-        <Link to="/login">Login</Link>
+        <Link to="/sign-in">Login</Link>
       </Button>
     </div>
   );
