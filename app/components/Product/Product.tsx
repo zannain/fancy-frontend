@@ -1,5 +1,4 @@
 import { useState } from "react";
-import ColorBubble from "../ColorBubble/ColorBubble";
 import { ProductImage, Product as ProductModel } from "~/data";
 
 type ProductProps = {

@@ -3,12 +3,10 @@ type ErrorProps = {
 }
 export default function Error(props: ErrorProps) {
    return (
-    <div className="w-fit h-8 py-2 px-3 bg-red-100 rounded-full flex">
-        <div className="self-center">
-            <div className="bg-white rounded-full p-1 text-sm drop-shadow">
-                <span className="rounded-full p-1 text-sm drop-shadow">Error</span>
-            </div>{' '}
-        <span className="text-sm text-red-500">{props.message}</span>
+    <div className="bg-red-100 rounded-full w-fit absolute mx-auto top-0 mt-2">
+        <div className="flex gap-3 m-1 items-baseline">
+            <div className="rounded-full p-1 text-sm drop-shadow bg-white text-red-900">Error</div>
+            <div className="text-sm text-red-500">{props.message}</div>
 
         </div>
     </div>
