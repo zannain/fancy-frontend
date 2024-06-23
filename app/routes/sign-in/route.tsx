@@ -1,39 +1,41 @@
-import { ActionFunctionArgs } from "@remix-run/node";
+import { ActionFunction, ActionFunctionArgs, json } from "@remix-run/node";
 import { Form, Link, useActionData } from "@remix-run/react";
-import Label from "../../components/Form/Label/Label";
 import { Button } from "../../components/Button/Button";
-import Input from "../../components/Form/Input/Input";
 import Error  from "../../components/Error/Error";
+import Input from "../../components/Form/Input/Input";
+import Label from "../../components/Form/Label/Label";
+import { validateEmail, validatePassword } from "../../utils/validators.server";
+import { login } from "../../utils/auth.server";
 
 export const meta = () => {
   return [{ title: "Login" }];
 };
-export async function action({ request }: ActionFunctionArgs) {
-  let formData = await request.formData();
-  let email = String(formData.get("email") || "");
-  let password = String(formData.get("password") || "");
-  let errors: {[key:string]: string} = {}
+export const action: ActionFunction = async ({ request }: ActionFunctionArgs) => {
+  const formData = await request.formData();
+  const email = String(formData.get("email") || "");
+  const password = String(formData.get("password") || "");
 
-  if (!email || !password) {
-    errors.message = "Incorrect email or password."
+  if (typeof email !== 'string' || typeof password !== 'string') {
+    return json({ error: `Invalid Form Data`, form: action }, { status: 400 })
+  }
+  const errors = {
+    email: validateEmail(email),
+    password: validatePassword(password),
   }
 
-  return {
-    errors: Object.keys(errors).length ? errors : null
+  if (Object.values(errors).some(Boolean)) {
+        return json({errors, fields: {email, password }}, {status: 400 })
   }
+
+  return login({email, password})
 }
 export default function LoginRoute() {
-  let actionData = useActionData<typeof action>();
-  let errors = actionData?.errors?.message;
   return (
-    <div className="flex min-h-full flex-1 flex-col mt-20 sm:px-6 lg:px-8 max-w-96 mx-auto">
-      {errors && <Error message={errors}></Error>}
-      <br />
-      <div className="sm:mx-auto sm:w-full sm:max-w-[319px]">
-        <h1 className="text-3xl mb-3">Log in to your account</h1>
-        <Form className="space-y-6" method="post">
+    <div className="h-full justify-center items-center flex flex-col gap-y-4">
+        <h1 className="text-3xl">Log in to your account</h1>
+        <Form method="post" className="rounded-2xl p-6 w-96">
           <div className="flex flex-col">
-            <Label htmlFor="email" className="text-sm">Email</Label>
+            <Label htmlFor="email">Email</Label>
 
             <Input type="email" id="email" name="email" />
           </div>
@@ -46,18 +48,16 @@ export default function LoginRoute() {
             Submit
           </Button>
         </Form>
-        <div className="flex justify-center mt-1">
-
+        <div>
           <p>
             Don't have an account?{" "}
+          <Button variant="linkColor" size="sm">
             <Link to="/sign-up">
-              <Button variant="linkColor" size="sm">
                 Sign up
-              </Button>
             </Link>
+          </Button>
           </p>
         </div>
-      </div>
     </div>
   );
 }

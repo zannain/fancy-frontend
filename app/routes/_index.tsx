@@ -1,6 +1,5 @@
 import { Link } from "@remix-run/react";
 import { Button } from "../components/Button/Button";
-
 export default function RootRoute() {
   return (
     <div className="flex flex-col gap-2 mx-auto m-2 p-3">
