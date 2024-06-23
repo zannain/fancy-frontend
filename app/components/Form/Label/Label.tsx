@@ -5,7 +5,7 @@ type LabelProps = ComponentProps<"label">
 
 const Label = forwardRef<HTMLLabelElement, LabelProps>(({children, ...props}: PropsWithChildren<LabelProps>, ref)  => {
     return (
-        <label {...props} className="text-neutral-700">{children}</label>
+        <label {...props} className="text-neutral-700 text-sm">{children}</label>
     )
 })
 
